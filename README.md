@@ -1,6 +1,6 @@
 # Python FTP server with Discord webhook
 
-I wanted a simple way of getting snapshots from my Amcrest POE camera motion alerts into a discord channel I use for alerting. This container runs a simple Python FTP server and posts any uploaded image to a Discord channel via webhook. Once the image is posted, it is deleted from the FTP server to keep space at a minimum.
+I wanted a simple way of getting snapshots from my Amcrest POE camera motion alerts into a discord channel I use for alerting. This Docker container (which I use Portainer for building and deploying the image) runs a simple Python FTP server and posts any uploaded image to a Discord channel via webhook. Once the image is posted, it is deleted from the FTP server to keep space at a minimum.
 
 ## Quick start
 
