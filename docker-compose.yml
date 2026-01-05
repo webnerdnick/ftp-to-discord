@@ -1,0 +1,21 @@
+services:
+  ftp:
+    build: .
+    container_name: python-ftp
+    environment:
+      FTP_USER: ${FTP_USER:-ftp}
+      FTP_PASS: ${FTP_PASS:-ftp}
+      FTP_HOME: /data
+      FTP_PORT: 21
+      PASV_PORTS: 30000-30010
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
+      DISCORD_MESSAGE: ${DISCORD_MESSAGE:-New image upload}
+      FTP_PUBLIC_HOST: ${FTP_PUBLIC_HOST:-}
+    ports:
+      - "21:21"
+      - "30000-30010:30000-30010"
+    volumes:
+      - ftp_data:/data
+
+volumes:
+  ftp_data:
