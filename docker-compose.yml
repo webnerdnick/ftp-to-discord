@@ -1,7 +1,6 @@
 services:
   ftp:
-    build: .
-    container_name: python-ftp
+    image: python-ftp:1.5.0
     environment:
       FTP_USER: ${FTP_USER:-ftp}
       FTP_PASS: ${FTP_PASS:-ftp}
