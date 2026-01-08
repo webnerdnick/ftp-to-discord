@@ -20,6 +20,8 @@ FTP_USER=ftp
 FTP_PASS=ftp
 FTP_PUBLIC_HOST=your.public.ip.or.host
 DISCORD_MESSAGE=New image upload
+SCAN_INTERVAL=5
+CLEANUP_INTERVAL=86400
 ```
 
 ## FTP client
@@ -30,3 +32,5 @@ Connect to port 21 with the user/password above. Uploaded images (jpg/png/gif/we
 
 - Passive ports default to 30000-30010; expose them in your firewall.
 - Set `FTP_PUBLIC_HOST` when the server is behind NAT so passive mode returns the correct address.
+- `SCAN_INTERVAL` is how often the server scans for new images (seconds).
+- `CLEANUP_INTERVAL` is how often leftover files/directories are purged (seconds).

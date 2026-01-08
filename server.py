@@ -92,6 +92,24 @@ def scan_for_images(root: str, interval: float) -> None:
         time.sleep(interval)
 
 
+def cleanup_leftovers(root: str, interval: float) -> None:
+    while True:
+        for base, dirs, files in os.walk(root, topdown=False):
+            for name in files:
+                path = os.path.join(base, name)
+                try:
+                    os.remove(path)
+                except OSError as exc:
+                    print(f"Failed to delete file {path}: {exc}")
+            for name in dirs:
+                path = os.path.join(base, name)
+                try:
+                    os.rmdir(path)
+                except OSError as exc:
+                    print(f"Failed to delete directory {path}: {exc}")
+        time.sleep(interval)
+
+
 class ImageUploadHandler(FTPHandler):
     def on_file_received(self, file: str) -> None:
         if is_image(file):
@@ -110,6 +128,7 @@ if __name__ == "__main__":
     pasv_ports = parse_pasv_ports(os.getenv("PASV_PORTS", "30000-30010"))
     public_host = os.getenv("FTP_PUBLIC_HOST")
     scan_interval = float(os.getenv("SCAN_INTERVAL", "5"))
+    cleanup_interval = float(os.getenv("CLEANUP_INTERVAL", "86400"))
 
     os.makedirs(ftp_home, exist_ok=True)
 
@@ -132,5 +151,7 @@ if __name__ == "__main__":
 
     scanner = threading.Thread(target=scan_for_images, args=(ftp_home, scan_interval), daemon=True)
     scanner.start()
+    cleaner = threading.Thread(target=cleanup_leftovers, args=(ftp_home, cleanup_interval), daemon=True)
+    cleaner.start()
 
     server.serve_forever()
